@@ -19,13 +19,56 @@ def bubbleSort(nums):
 				temp = nums[j]
 				nums[j] = nums[j+1]
 				nums[j+1] = temp
-			j += 1
-		i += 1
+		print("中间过程中 nums 为", nums)
+
+	return nums
+
+
+
+
+
+
+# 按照上面的代码，如果数组已经是排好序的，是否会有重复的步骤呢？我们以 nums2 = [1, 1, 2, 3, 4, 5]来跑一遍，结果如下
+# 中间过程中 nums 为 [1, 1, 2, 3, 4, 5]
+# 中间过程中 nums 为 [1, 1, 2, 3, 4, 5]
+# 中间过程中 nums 为 [1, 1, 2, 3, 4, 5]
+# 中间过程中 nums 为 [1, 1, 2, 3, 4, 5]
+# 中间过程中 nums 为 [1, 1, 2, 3, 4, 5]
+# [1, 1, 2, 3, 4, 5]
+
+
+# 如上，可以看到，即使已经是排好序的数组了，代码还是会跑 n-1遍，这里是5遍。
+# 那怎么优化呢？
+# 我们可以设立一个标记位 flag，  设为 FALSE
+# 在内部循环的元素交换后，为这个 flag 赋值，即有元素交换的话， 就重置这个 flag, 那当flag 没有被重置时，就说明一个完整的一轮
+# 比较中都没有交换元素，说明数组已经是排序好了的，就直接退出循环即可
+# 代码如下：
+
+def bubbleSort2(nums):
+	# 设置标记位为 False
+	flag = False
+
+	for i in range(len(nums)-1):
+		for j in range(len(nums)-i-1):
+			if nums[j] > nums[j+1]:
+				tmp = nums[j]
+				nums[j] = nums[j+1]
+				nums[j+1] = tmp 
+				flag = True
+		print("中间过程中 nums 为", nums)
+		# 如果flag 依旧是 False, 说明内部循环中没有进行过元素交换，数组已经是排序好了的。
+		if not flag:
+			break
 
 	return nums
 
 
 if __name__ == "__main__":
-	nums = [1, 4, 2, 3, 6, 5, 7]
+	nums = [1, 1, 2, 3, 4, 5]
 	print(bubbleSort(nums))
+
+	print(bubbleSort2(nums)) 
+	# 执行后的结果： 
+	#    中间过程中 nums 为 [1, 1, 2, 3, 4, 5]
+	#    [1, 1, 2, 3, 4, 5]
 
