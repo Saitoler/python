@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from functools import reduce
 
 """
 题目：
@@ -94,13 +95,15 @@ def RomanToInt(s):
     # 替换
 	s = s.replace('IV', ref['IV']).replace('IX', ref['IX']).replace('XL', ref['XL']).replace('XC', ref['XC']).replace('CD', ref['CD']).replace('CM', ref['CM'])
 	
-    # 遍历
+    #遍历
 	sum = 0
 	for c in s:
 		sum += romaNums[c]
 
 	return sum
 
+	# 上面的遍历操作其实还可以通过 map, reduce 函数转换为一行代码来解决
+	# return reduce(lambda x,y: x+y, map(lambda x:romaNums[x], s))
 
 
 if __name__ == "__main__":
