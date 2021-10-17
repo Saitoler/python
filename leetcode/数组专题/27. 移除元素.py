@@ -41,7 +41,34 @@ def removeElement2(nums, val):
     return slow
 
 
+# 上面的双指针解法在 val 值较少时，有可能会导致重复搬运无需处理的元素，例如 [1, 2, 3, 4, 5]， val=1
+# 按照上面的双指针解法，要把后面的值依次向前搬一次，而事实上，直接将末尾的5覆盖到第一位即可
+# 所以如下的双指针，左指针指向数组开始，右指针指向数组末尾
+# 判断左指针指向的元素是否是 val, 如果是，就将末尾的值覆盖过来，然后将右指针左移一位
+# 此时若覆盖过来的元素还是等于 val，就继续将右指针指向的值搬过来，一直重复这个步骤
+# 如果左指针指向的元素不是 val, 就将左指针右移一次
+
+# 这样遍历一遍，直到left 和right 相遇，[0,left) 区间内都没有 val 值 
+
+def removeElement3(nums, val):
+    left, right = 0, len(nums)-1
+
+    while left <= right:
+        if nums[left] == val:
+            nums[left] = nums[right]
+            right -= 1
+        else:
+            left += 1
+
+    return left
 
 if __name__ == "__main__":
     print(removeElement([3,2,2,3], 3))
     print(removeElement([0,1,2,2,3,0,4,2], 2))
+
+    print(removeElement2([3,2,2,3], 3))
+    print(removeElement2([0,1,2,2,3,0,4,2], 2))
+
+    print(removeElement3([3,2,2,3], 3))
+    print(removeElement3([0,1,2,2,3,0,4,2], 2))
+
