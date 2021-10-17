@@ -58,6 +58,25 @@ def removeDuplicates(nums):
 # print(id(nums)) #4396776576
 
 
+# 还有一种更好的思路，可以实现不使用额外数组空间，原地修改数组并使用O(1)空间
+# 这种方法称为双指针
+# 对于这道题来说，定义两个指针，一个慢指针 slow, 一个快指针 fast
+# 慢指针slow 指向已知的非重复区间最后一位，fast 在前面遍历用于寻找非重复元素
+
+def removeDuplicates2(nums):
+    slow, fast = 0, 1
+
+    while fast < len(nums):
+        if nums[fast] != nums[fast-1]:
+            slow += 1
+            nums[slow] = nums[fast]
+
+        fast += 1
+
+    return slow+1
+
+
+
 if __name__ == "__main__":
     nums1 = [0,0,1,1,1,2,2,3,3,4]
     nums2 = [1, 1, 2, 2, 2, 3, 3]
@@ -65,3 +84,7 @@ if __name__ == "__main__":
     print(removeDuplicates(nums1))
     print(removeDuplicates(nums2))
     print(removeDuplicates(nums3))
+
+    print(removeDuplicates2(nums1))
+    print(removeDuplicates2(nums2))
+    print(removeDuplicates2(nums3))
