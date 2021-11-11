@@ -53,3 +53,21 @@ def inorderTraversal(tree):
 	return result
 
 
+# 递归思路：
+def inorderTraversal(tree):
+	# 要将数据保存在列表中
+	result = []
+
+	# 再写一个内置函数，用于递归
+	def inorder(tree):
+		# 先递归遍历左子树
+		inorder(tree.left)
+		# 再获取数据
+		result.append(tree.val)
+		# 再递归遍历右子树
+		inorder(tree.right)
+
+	# 调用内置递归函数
+	inorder(tree) 
+
+	return result 
