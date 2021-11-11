@@ -1,0 +1,58 @@
+# -*- coding: utf-8 -*-
+
+"""
+给定一个二叉树，返回它的 后序遍历。
+
+示例:
+
+输入: [1,null,2,3]  
+   1
+    \
+     2
+    /
+   3 
+
+输出: [3,2,1]
+进阶:递归算法很简单，你可以通过迭代算法完成吗？
+
+来源：力扣（LeetCode）
+链接：https://leetcode-cn.com/problems/binary-tree-postorder-traversal
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+
+"""
+
+# 非递归思路
+
+def postorderReversal(tree):
+	result, stack = [], []
+	lastVisit = tree 
+
+	while tree or stack:
+		while tree:
+			stack.append(tree)
+			tree = tree.left
+
+		tree = stack[-1]
+		if tree.right is None or tree.right == lastVisit:
+			result.append(tree.val)
+			stack.pop()
+			lastVisit = tree  
+			tree = None
+		else:
+			tree = tree.right
+
+	return result
+
+# 递归思路
+def postorderReversal(tree):
+	result = []
+
+	def postorder(tree):
+		postorder(tree.left)
+		postorder(tree.right)
+		result.append(tree.val)
+
+	postorder(tree)
+	return result
+
+
